@@ -15,8 +15,8 @@ from configparser import ConfigParser, NoOptionError
 log = VaultfsLogger()
 
 def vaultfs(mountpoint, local, remote, payload, secrets_path):
-    FUSE(vault_fuse(local, remote, payload, secrets_path, recheck_timestamp=604800), mountpoint, nothreads=True,
-         foreground=True)
+    FUSE(vault_fuse(local, remote, payload, secrets_path, recheck_timestamp=604800),
+         mountpoint, nothreads=True, foreground=True)
 
 def main():
     # FIXME: add a timeout parameter
@@ -41,8 +41,8 @@ def main():
                         help='.Vault authentication token')
 
     args = parser.parse_args()
-    if not args.config and (args.mountpoint is None or args.local is None or args.payload is None
-                            or args.remote is None or args.secrets_path is None):
+    if not args.config and None not in (args.mountpoint, args.local, args.payload,
+                                         args.remote, args.secrets_path):
         parser.error('arguments: "--mountpoint", "--local", "--remote", "--secrets-path" '
                      'and "--payload" are required when "--config" is missing')
     
