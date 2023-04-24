@@ -24,22 +24,27 @@ def main():
     
     parser = argparse.ArgumentParser(
         description='Vault fuse file system',
-        epilog='Note: arguments: "--mountpoint", "--local", "--remote", "--secetes-path" and "--payload" are required when "--config" is missing')
+        epilog='Note: arguments: "--mountpoint", "--local", "--remote", "--secrets-path" '
+               'and "--payload" are required when "--config" is missing')
 
-    parser.add_argument( '-c', '--config', dest='config', metavar='', required=False, help='Configuration file.')
-    parser.add_argument( '-m', '--mountpoint', dest='mountpoint', metavar='',
-        required=False, help='where the fuse filesystem will be mounted.')
+    parser.add_argument( '-c', '--config', dest='config', metavar='', required=False,
+                        help='Configuration file.')
+    parser.add_argument( '-m', '--mountpoint', dest='mountpoint', metavar='', required=False,
+                        help='where the fuse filesystem will be mounted.')
     parser.add_argument( '-l', '--local', dest='local', metavar='', required=False,
                         help='credentials local path after being pulled from vault.')
-    parser.add_argument( '-r', '--remote', dest='remote', metavar='', required=False, help='Vault Server HTTPS address.')
+    parser.add_argument( '-r', '--remote', dest='remote', metaﬁvar='', required=False,
+                        help='Vault Server HTTPS address.')
     parser.add_argument( '-s', '--secrets-path', dest='secrets_path', metavar='', required=False,
-        action='append', help='List of secrets path in the Vault server.')
+                        action='append', help='List of secrets path in the Vault server.')
     parser.add_argument( '-p', '--payload', dest='payload', metavar='', required=False,
-        help='.Vault authentication token')
+                        help='.Vault authentication token')
 
     args = parser.parse_args()
-    if not args.config and (args.mountpoint is None or args.local is None or args.payload is None or args.remote is None or args.secrets_path is None):
-        parser.error('arguments: "--mountpoint", "--local", "--remote", "--secetes-path" and "--payload" are required when "--config" is missing')
+    if not args.config and (args.mountpoint is None or args.local is None or args.payload is None
+                            or args.remote is None or args.secrets_path is None):
+        parser.error('arguments: "--mountpoint", "--local", "--remote", "--secrets-path" '
+                     'and "--payload" are required when "--config" is missing')
     
     config_file = ConfigParser()
     if args.config:
